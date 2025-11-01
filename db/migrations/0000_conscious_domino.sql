@@ -1,0 +1,23 @@
+CREATE TABLE "users" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"username" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"phone" varchar(255) NOT NULL,
+	"age" integer DEFAULT 0,
+	"avatar" varchar(255) DEFAULT '',
+	"gender" varchar(255) DEFAULT 'I don''t want to say',
+	"role" varchar(255) DEFAULT 'user' NOT NULL,
+	"password" varchar(255) NOT NULL,
+	"last_login" timestamp DEFAULT now() NOT NULL,
+	"is_active" boolean DEFAULT true NOT NULL,
+	"is_verified" boolean DEFAULT false NOT NULL,
+	"is_deleted" boolean DEFAULT false NOT NULL,
+	"is_suspended" boolean DEFAULT false NOT NULL,
+	"is_locked" boolean DEFAULT false NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "users_username_unique" UNIQUE("username"),
+	CONSTRAINT "users_email_unique" UNIQUE("email"),
+	CONSTRAINT "users_phone_unique" UNIQUE("phone")
+);

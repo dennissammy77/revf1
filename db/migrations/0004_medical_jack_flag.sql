@@ -1,0 +1,22 @@
+ALTER TABLE "competition_awards" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "competition_awards" ALTER COLUMN "competition_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "competitions" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "payments" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "payments" ALTER COLUMN "user_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_awards" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_awards" ALTER COLUMN "round_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_awards" ALTER COLUMN "winner_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_plays" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_plays" ALTER COLUMN "round_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_plays" ALTER COLUMN "user_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_plays" ALTER COLUMN "track_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_plays" ALTER COLUMN "payment_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_tracks" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "round_tracks" ALTER COLUMN "round_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "rounds" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "rounds" ALTER COLUMN "competition_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "rounds_participants" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "rounds_participants" ALTER COLUMN "round_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "rounds_participants" ALTER COLUMN "user_id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "users" ALTER COLUMN "id" SET DATA TYPE uuid;--> statement-breakpoint
+ALTER TABLE "users" ALTER COLUMN "id" SET DEFAULT gen_random_uuid();
