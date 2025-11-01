@@ -26,13 +26,14 @@ export default function RegisterForm() {
       } else if (res.error === "user_exists") {
         setServerError("A user with that email already exists.");
       } else {
-        setServerError("Something went wrong, try again later.");
+        console.log("errorr",res.error.message)
+        setServerError(res.error.message);
       }
       return;
     }
 
     // success
-    router.push("/welcome");
+    router.push("/dashboard");
   }
 
   return (

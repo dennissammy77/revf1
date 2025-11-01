@@ -1,15 +1,16 @@
 import { db } from "@/db";
 import { users } from "../../db/schema/user.schema";
 import { eq, or } from "drizzle-orm";
+import { CreateUserInput } from "./user.validator";
 
 export class UserRepository {
-  private readonly model: users
+  private readonly model: typeof users
   
   constructor (){
     this.model = users
   }
 
-  async createUser(data: typeof users.$inferInsert) {
+  async createUser(data: CreateUserInput) {
     const [result] = await db.insert(this.model).values(data).returning();
     return result;
   }
