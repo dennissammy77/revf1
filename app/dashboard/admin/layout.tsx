@@ -17,8 +17,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          backgroundColor: "#1f1f1f",
-          color: "#fff",
+          backgroundColor: "#fff",
+          color: "#000",
           padding: "10px 20px",
           boxSizing: "border-box",
           position: "sticky",
@@ -82,9 +82,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <main
         style={{
           flex: 1,
-          padding: "20px",
-          backgroundColor: "#121212",
-          color: "#fff",
+          backgroundColor: "#fffff",
+          color: "#000",
           overflowY: "auto",
         }}
       >

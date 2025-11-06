@@ -1,5 +1,5 @@
 import { UserRepository } from "./user.repository";
-import { users } from "../../db/schema";
+import { users } from "../../db/schema/user.schema";
 import { CreateUserInput } from "./user.validator";
 import { AuthService } from "../auth/auth.service";
 
@@ -18,7 +18,18 @@ export class UserService {
       throw new Error("User with this credentials already exists");
     }
     const hashedPassword = await this.authService.encryptString(data.password);
-    const user = await this.repo.createUser({ ...data, password: hashedPassword });
+    const user = await this.repo.createUser({ ...data, name: data.name ?? "", password: hashedPassword });
+    const token = await this.authService.generateJwtToken(user)
+    return {user, token}
+  }
+
+  async registerStaffUser(data: CreateUserInput) {
+    const existing = await this.repo.checkUserCredentialsExist(data.phone,data.email);
+    if (existing?.length > 0) {
+      throw new Error("User with this credentials already exists");
+    }
+    const hashedPassword = await this.authService.encryptString(data.password);
+    const user = await this.repo.createUser({ ...(data as any), name: data.name ?? "", role: 'staff', password: hashedPassword } as any);
     const token = await this.authService.generateJwtToken(user)
     return {user, token}
   }
@@ -43,6 +54,13 @@ export class UserService {
 
   async listUsers() {
     return await this.repo.listUsers();
+  }
+
+  async listUsersByRole(role: string, query?: string) {
+    if (query && query.trim().length > 0) {
+      return await this.repo.searchUsersByRole(role, query.trim());
+    }
+    return await this.repo.listUsersByRole(role);
   }
 
   async updateUser(id: string, data: Partial<typeof users.$inferInsert>) {

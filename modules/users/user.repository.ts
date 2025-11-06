@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { users } from "../../db/schema/user.schema";
-import { eq, or } from "drizzle-orm";
-import { CreateUserInput } from "./user.validator";
+import { and, eq, ilike, or } from "drizzle-orm";
+import type { CreateUserInput } from "./user.validator";
 
 export class UserRepository {
   private readonly model: typeof users
@@ -10,7 +10,7 @@ export class UserRepository {
     this.model = users
   }
 
-  async createUser(data: CreateUserInput) {
+  async createUser(data: typeof users.$inferInsert) {
     const [result] = await db.insert(this.model).values(data).returning();
     return result;
   }
@@ -34,6 +34,27 @@ export class UserRepository {
 
   async listUsers() {
     return await db.select().from(this.model);
+  }
+
+  async listUsersByRole(role: string) {
+    return await db.select().from(this.model).where(eq(users.role, role));
+  }
+
+  async searchUsersByRole(role: string, query: string) {
+    const q = `%${query}%`;
+    return await db
+      .select()
+      .from(this.model)
+      .where(
+        and(
+          eq(users.role, role),
+          or(
+            ilike(users.name, q),
+            ilike(users.email, q),
+            ilike(users.phone, q)
+          )
+        )
+      );
   }
 
   async updateUser(id: string, data: Partial<typeof users.$inferInsert>) {
