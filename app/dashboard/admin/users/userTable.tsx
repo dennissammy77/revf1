@@ -34,7 +34,7 @@ function getStatus(user: any): { label: keyof typeof statusColor } {
   return { label: "Active" } as const;
 }
 
-export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]; initialSearch?: string }) {
+export default function UsersTable({ users, initialSearch = "" }: { users: any[]; initialSearch?: string }) {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [search, setSearch] = useState(initialSearch);
   const router = useRouter();
@@ -68,7 +68,7 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
   return (
     <Box p={6} bg="gray.50" minH="100vh">
       <Flex mb={6} align="center">
-        <Heading size="4xl">Staff</Heading>
+        <Heading size="4xl">Users</Heading>
         <Spacer />
         <HStack>
           <Input
@@ -81,19 +81,19 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
             onChange={(e) => setSearch(e.target.value)}
           />
           <Button backgroundColor={"black"} px='2' fontWeight={"bold"} color={"white"} onClick={() => setDialogOpen(true)}>
-            Add staff
+            Add user
           </Button>
         </HStack>
       </Flex>
-      <AddUserDialog isOpen={isDialogOpen} onOpenChange={setDialogOpen} role="staff"/>
+      <AddUserDialog isOpen={isDialogOpen} onOpenChange={setDialogOpen} role="user"/>
 
       <Box bg="white" borderRadius="md" p={3} boxShadow="sm" color={"black"}>
-        {!(staff && staff.length > 0) ? (
+        {!(users && users.length > 0) ? (
           <Flex direction="column" align="center" justify="center" py={16} gap={2}>
             <Heading size="lg">No users found</Heading>
-            <Text color="gray.500">Invite or add your first staff member.</Text>
+            <Text color="gray.500">Invite or add your first member.</Text>
             <Button backgroundColor={"black"} px='2' fontWeight={"bold"} color={"white"} onClick={() => setDialogOpen(true)}>
-              Add staff
+              Add user
             </Button>
           </Flex>
         ) : (
@@ -101,7 +101,7 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
           <Table.Header>
             <Table.Row >
               <Table.ColumnHeader color={"black"}>Name</Table.ColumnHeader>
-              <Table.ColumnHeader color={"black"}>Username</Table.ColumnHeader>
+              <Table.ColumnHeader color={"black"}>User Name</Table.ColumnHeader>
               <Table.ColumnHeader color={"black"}>Phone number</Table.ColumnHeader>
               <Table.ColumnHeader color={"black"}>Email</Table.ColumnHeader>
               <Table.ColumnHeader color={"black"}>Role</Table.ColumnHeader>
@@ -110,7 +110,7 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {staff?.map((u) => {
+            {users?.map((u) => {
               const status = getStatus(u as any);
               return (
               <Table.Row key={u.id} padding={16}>

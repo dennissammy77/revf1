@@ -11,15 +11,16 @@ import {
   Portal,
   HStack,
 } from "@chakra-ui/react";
-import { addStaffAction } from "@/app/actions/user";
+import { registerUserAction } from "@/app/actions/user";
 import { useRouter } from "next/navigation";
 
-interface AddStaffDialogProps {
+interface AddUserDialogProps {
   isOpen: boolean;
+  role: string;
   onOpenChange: (open: boolean) => void;
 }
 
-export default function AddStaffDialog({ isOpen, onOpenChange }: AddStaffDialogProps) {
+export default function AddUserDialog({ isOpen, onOpenChange, role="user" }: AddUserDialogProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -33,8 +34,9 @@ export default function AddStaffDialog({ isOpen, onOpenChange }: AddStaffDialogP
       email: String(formData.get("email") || ""),
       phone: String(formData.get("phone") || ""),
       password: String(formData.get("password") || ""),
+      role: String(role),
     };
-    const res = await addStaffAction(payload as any);
+    const res = await registerUserAction(payload as any);
     if (res?.ok) {
       router.refresh();
       onClose();
@@ -49,7 +51,7 @@ export default function AddStaffDialog({ isOpen, onOpenChange }: AddStaffDialogP
           <Dialog.Positioner>
             <Dialog.Content>
               <Dialog.Header>
-                <Heading size="lg" mx='6' mt='4' mb='2'>Add staff</Heading>
+                <Heading size="lg" mx='6' mt='4' mb='2'>Add User</Heading>
               </Dialog.Header>
               <Dialog.Body p={6}>
                 <form
@@ -70,7 +72,7 @@ export default function AddStaffDialog({ isOpen, onOpenChange }: AddStaffDialogP
                     <Input name="password" placeholder="Password" type="password" required />
                     <HStack>
                       <Button type="submit" backgroundColor={"black"} px='2' fontWeight={"bold"} color={"white"} disabled={isPending}>
-                        {isPending ? "Adding..." : "Add staff"}
+                        {isPending ? "Adding..." : "Add User"}
                       </Button>
                       <Button variant="ghost" backgroundColor={"white"} borderColor={"black"} borderWidth={1} px='2' fontWeight={"bold"} onClick={onClose}>
                         Cancel

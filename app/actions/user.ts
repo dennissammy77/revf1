@@ -17,7 +17,7 @@ export async function registerUserAction(payload: CreateUserInput) {
   }
 };
 
-export async function addStaffAction(payload: CreateUserInput) {
+export async function addUserAction(payload: CreateUserInput) {
   try{
     const user  = await userService.registerStaffUser(payload);
     revalidatePath('/dashboard/admin/staff');
@@ -28,7 +28,7 @@ export async function addStaffAction(payload: CreateUserInput) {
   }
 }
 
-export async function deleteStaffAction(id: string) {
+export async function deleteUserAction(id: string) {
   try{
     const user  = await userService.deleteUser(id);
     return { ok: true, user };
