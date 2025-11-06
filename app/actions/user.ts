@@ -27,3 +27,13 @@ export async function addStaffAction(payload: CreateUserInput) {
     return { ok: false, error: "server_error" };
   }
 }
+
+export async function deleteStaffAction(id: string) {
+  try{
+    const user  = await userService.deleteUser(id);
+    return { ok: true, user };
+  }catch(err){
+    console.error("deleteUserAction error:", err);
+    return { ok: false, error: "server_error" };
+  }
+}

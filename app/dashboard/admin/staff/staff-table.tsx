@@ -18,6 +18,9 @@ import {
 import AddStaffDialog from "@/components/ui/add-staff-modal";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FaUserEdit } from "react-icons/fa";
+import { TiUserDelete } from "react-icons/ti";
+import { deleteStaffAction } from "@/app/actions/user";
 
 const statusColor = {
   Active: "green",
@@ -55,6 +58,13 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
     }, 300);
     return () => clearTimeout(id);
   }, [search, pathname, params, router]);
+  
+  const deleteStaff=async(id:string)=>{
+    const res = await deleteStaffAction(id);
+    if (res?.ok) {
+      router.refresh();
+    }
+  }
   return (
     <Box p={6} bg="gray.50" minH="100vh">
       <Flex mb={6} align="center">
@@ -130,13 +140,20 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
                     <IconButton
                       size="sm"
                       aria-label="edit"
-                      variant="ghost"
-                    />
+                      variant="outline"
+                      color={"black"}
+                    >
+                      <FaUserEdit />
+                    </IconButton>
                     <IconButton
                       size="sm"
                       aria-label="menu"
-                      variant="ghost"
-                    />
+                      variant="outline"
+                      color={"black"}
+                      onClick={()=>{deleteStaff(u.id)}}
+                    >
+                      <TiUserDelete />
+                    </IconButton>
                   </HStack>
                 </Table.Cell >
               </Table.Row >
@@ -146,12 +163,12 @@ export default function StaffTable({ staff, initialSearch = "" }: { staff: any[]
         </Table.Root>
         )}
 
-        {staff && staff.length > 0 && (
+        {/* {staff && staff.length > 0 && (
           <Flex justify="space-between" align="center" mt={4}>
             <Text fontSize="sm">Rows per page: 5</Text>
             <Text fontSize="sm">1–5 of 20</Text>
           </Flex>
-        )}
+        )} */}
       </Box>
     </Box>
   );

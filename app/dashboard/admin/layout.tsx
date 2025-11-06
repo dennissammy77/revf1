@@ -68,6 +68,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   Users
                 </Link>
               </li>
+              <li style={{ marginBottom: "8px" }}>
+                <Link href="/dashboard/admin/staff" onClick={() => setIsMenuOpen(false)}>
+                  Staff
+                </Link>
+              </li>
               <li>
                 <Link href="/dashboard/admin/settings" onClick={() => setIsMenuOpen(false)}>
                   Settings
